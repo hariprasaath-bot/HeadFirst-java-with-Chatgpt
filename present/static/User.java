@@ -20,7 +20,7 @@ public class User {
         User user1 = new User("Alice");
         User user2 = new User("Bob");
 
-        System.out.println(User.getNumUsers()); // prints "2"
+        System.out.println("Number of instances created is monitored using a static variable which doesn't reinitialised for every instance :" + User.getNumUsers()); // prints "2"
 
     }
 }

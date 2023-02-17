@@ -1,0 +1,166 @@
+give me example of socketclient connection  in java one server code and a client code to share messages between them.
+
+Sure, here's an example of a Java server and client using sockets to share messages between them:
+
+Server Code:
+
+java
+Copy code
+import java.io.*;
+import java.net.*;
+
+public class Server {
+    public static void main(String[] args) {
+        try {
+            // create a server socket listening on port 5000
+            ServerSocket serverSocket = new ServerSocket(5000);
+
+            // wait for a client to connect
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("Client connected!");
+
+            // set up input and output streams
+            InputStream inputStream = clientSocket.getInputStream();
+            OutputStream outputStream = clientSocket.getOutputStream();
+
+            // create a data input and output stream to read and write messages
+            DataInputStream dataInputStream = new DataInputStream(inputStream);
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+            // start an infinite loop to read and write messages
+            while (true) {
+                // read a message from the client
+                String message = dataInputStream.readUTF();
+                System.out.println("Client says: " + message);
+
+                // write a message back to the client
+                String response = "Server received your message: " + message;
+                dataOutputStream.writeUTF(response);
+                dataOutputStream.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+Client Code:
+
+java
+Copy code
+import java.io.*;
+import java.net.*;
+
+public class Client {
+    public static void main(String[] args) {
+        try {
+            // create a socket to connect to the server at IP address "localhost" and port 5000
+            Socket socket = new Socket("localhost", 5000);
+            System.out.println("Connected to server!");
+
+            // set up input and output streams
+            InputStream inputStream = socket.getInputStream();
+            OutputStream outputStream = socket.getOutputStream();
+
+            // create a data input and output stream to read and write messages
+            DataInputStream dataInputStream = new DataInputStream(inputStream);
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+            // start an infinite loop to read and write messages
+            while (true) {
+                // read a message from the user
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                System.out.print("Enter a message to send to the server: ");
+                String message = reader.readLine();
+
+                // write the message to the server
+                dataOutputStream.writeUTF(message);
+                dataOutputStream.flush();
+
+                // read the response from the server
+                String response = dataInputStream.readUTF();
+                System.out.println("Server says: " + response);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+This code sets up a server that listens for incoming connections on port 5000. When a client connects, the server sets up input and output streams and enters an infinite loop to read and write messages. The client connects to the server and also sets up input and output streams. The client then enters an infinite loop to read messages from the user and send them to the server, and also to read messages from the server and print them to the console.
+
+To run this code, first start the server by running the Server class. Then, in a separate terminal or command prompt window, run the Client class to connect to the server and start sending messages.
+
+
+
+
+Hariprasaath R
+the many clients should communicatie with server at once.
+To enable multiple clients to communicate with the server at the same time, you can modify the server code to handle each incoming client connection in a separate thread. Here is an example of how you could modify the server code to achieve this:
+
+Server Code:
+
+java
+Copy code
+import java.io.*;
+import java.net.*;
+
+public class Server {
+    public static void main(String[] args) {
+        try {
+            // create a server socket listening on port 5000
+            ServerSocket serverSocket = new ServerSocket(5000);
+            System.out.println("Server started. Listening for clients...");
+
+            // start an infinite loop to handle incoming client connections
+            while (true) {
+                // wait for a client to connect
+                Socket clientSocket = serverSocket.accept();
+                System.out.println("Client connected: " + clientSocket.getInetAddress().getHostAddress());
+
+                // create a new thread to handle the client connection
+                ClientHandler clientHandler = new ClientHandler(clientSocket);
+                Thread thread = new Thread(clientHandler);
+                thread.start();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static class ClientHandler implements Runnable {
+        private Socket clientSocket;
+        private DataInputStream dataInputStream;
+        private DataOutputStream dataOutputStream;
+
+        public ClientHandler(Socket clientSocket) {
+            this.clientSocket = clientSocket;
+        }
+
+        @Override
+        public void run() {
+            try {
+                // set up input and output streams
+                InputStream inputStream = clientSocket.getInputStream();
+                OutputStream outputStream = clientSocket.getOutputStream();
+                dataInputStream = new DataInputStream(inputStream);
+                dataOutputStream = new DataOutputStream(outputStream);
+
+                // start an infinite loop to read and write messages
+                while (true) {
+                    // read a message from the client
+                    String message = dataInputStream.readUTF();
+                    System.out.println("Received message from client: " + message);
+
+                    // write a message back to the client
+                    String response = "Server received your message: " + message;
+                    dataOutputStream.writeUTF(response);
+                    dataOutputStream.flush();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+In this modified code, the server starts an infinite loop to handle incoming client connections. When a client connects, the server creates a new ClientHandler object and starts a new thread to handle the client connection. The ClientHandler class implements the Runnable interface, and its run method is executed in the new thread. The run method sets up input and output streams for the client connection and enters an infinite loop to read and write messages.
+
+Now, multiple clients can connect to the server at the same time, and each client connection will be handled in a separate thread. When a client sends a message to the server, the server will respond to that client only. If you want to broadcast messages to all connected clients, you will need to keep track of all the client sockets and their output streams, and send the message to each output stream in turn.

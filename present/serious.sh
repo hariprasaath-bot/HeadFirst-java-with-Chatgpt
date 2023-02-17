@@ -1,7 +1,9 @@
-printf '%80s Available Examples:\n'
+printf '%80s Available Examples\n'
 
 printf "%10s 1.Static\n"
 printf "%10s 2.Construcor\n"
+printf "%10s 3.Server\n"
+printf "%10s 4.Client\n"
 echo
 printf "%10s Enter your choice: "
 read -r usrchoice
@@ -10,6 +12,9 @@ case $usrchoice in
     1)
         printf '%80s Entered Static example\n'
         cd static
+        printf '%80s Static example Code\n'
+        cat *.java
+        printf '%80s Compiling and Executing program\n'
         javac *.java
         # ls | grep .class
         comm=$(ls | grep .class)
@@ -24,6 +29,9 @@ case $usrchoice in
         echo
         echo
         cd constructor
+        printf '%80s Constructor example Code\n'
+        cat *.java
+        printf '%80s Compiling and Executing program\n'
         javac *.java
         # ls | grep .class
         comm=$(ls | grep .class)
@@ -34,37 +42,43 @@ case $usrchoice in
         make clean
         cd .. 
         ;;
-    # 3)
-    #     printf '%15sEntered mosquitto starter set up\n'
-    #     echo "starting mosqutto broker: "
-    #     printf " If mosquitto already running please stop with sudo systemctl stop mosquitto\n"
-    #         var=$(ls | grep test.conf)
-    #         ret=$?
-    #         if [ "$ret" == "0" ]
-    #             then    
-    #             echo
-    #             mosquitto -v -c "test.conf"
-    #         else
-    #             echo "run script from intended directory or test.conf is missing"
-    #         fi
-    #     ;;
-    # 4)
-    #     printf '%15sEntered iptables rules\n'
-    #     echo 
-    #     if [ "$EUID" -ne 0 ]
-    #         then echo " Please run as root "
-    #     exit
-    #     fi
-    #     var=$(iptables --version)
-    #     ret=$?
-    #     if [ "$ret" == "0" ]
-    #             then
-    #             iptables -t nat -L
-    #         else
-    #             echo " iptables may not be installed in your system"
-    #         fi
-
-    #     ;;
+    3)
+        printf '%80sEntered Server example\n'
+        echo
+        echo
+        cd server
+        printf '%80s Server example Code\n'
+        cat *.java
+        printf '%80s Compiling and Executing program\n'
+        javac *.java
+        # ls | grep .class
+        comm="Server.class"
+        printf ''"${comm::-6}"
+        Classfile=${comm::-6}
+        java $Classfile
+        echo
+        echo
+        make clean
+        cd .. 
+        ;;
+    4)
+        printf '%80sEntered Client example\n'
+        echo
+        echo
+        cd Client
+        printf '%80sClient example Code\n'
+        cat *.java
+        printf '%80s Compiling and Executing program\n'
+        javac *.java
+        # ls | grep .class
+        comm=$(ls | grep .class)
+        Classfile=${comm::-6}
+        java $Classfile
+        echo
+        echo
+        make clean
+        cd .. 
+        ;;
     # 5)
     #     printf '%15sEntered Syn_flood set up\n'
     #     echo 

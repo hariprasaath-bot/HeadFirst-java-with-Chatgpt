@@ -48,7 +48,7 @@ public class Person {
         Person person1 = new Person("Jane", 30);
         Person person2 = new Person(25);
         
-        System.out.println(person1 + "\n"+ person2);
+        System.out.println("Output of Constructor overloaded classes:\n " + person1 + "\n"+ person2);
 
     }
 
