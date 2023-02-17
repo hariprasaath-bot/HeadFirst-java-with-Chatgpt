@@ -4,6 +4,7 @@ printf "%10s 1.Static\n"
 printf "%10s 2.Construcor\n"
 printf "%10s 3.Server\n"
 printf "%10s 4.Client\n"
+printf "%10s 5.Overriding\n"
 echo
 printf "%10s Enter your choice: "
 read -r usrchoice
@@ -72,7 +73,7 @@ case $usrchoice in
         echo
         echo
         cd Client
-        printf '%80sClient example Code\n'
+        printf '%80s Client example Code\n'
         cat *.java
         printf '%80s Compiling and Executing program\n'
         javac -d ../classfiles *.java
@@ -87,32 +88,26 @@ case $usrchoice in
         make clean
         cd .. 
         ;;
-    # 5)
-    #     printf '%15sEntered Syn_flood set up\n'
-    #     echo 
-
-    #         var=$(ls | grep attackers)
-    #         ret=$?
-    #         if [ "$ret" == "0" ]
-    #             then
-    #             printf 'Enter target ip address :            '
-    #             read -r target_ip
-    #             printf 'Enter port number       :            '
-    #             read -r port_num
-    #             printf 'Enter num of packets    :            '
-    #             read -r num_pkts
-    #             cd attackers
-    #             echo
-    #             printf "Going to start with these parameters: \n"
-    #             printf '  Host ip     :    %s\n ' "$target_ip"
-    #             printf 'port numb    :    %s\n ' "$port_num"
-    #             printf 'numb pkts    :    %s\n ' "$num_pkts"
-    #             echo
-    #             python3 syn_flood.py $target_ip $port_num $num_pkts
-    #         else
-    #             echo "run script from intended directory or the file is missing/renamed"
-    #         fi
-    #     ;;
+    5)
+        printf '%80sEntered Overriding example\n'
+        echo
+        echo
+        cd Override
+        printf '%80s Overriding example Code\n'
+        cat *.java
+        printf '%80s Compiling and Executing program\n'
+        javac -d ../classfiles *.java
+        # ls | grep .class
+        cd ..
+        cd classfiles
+        comm="Over.class"
+        Classfile=${comm::-6}
+        java $Classfile
+        echo
+        echo
+        make clean
+        cd .. 
+        ;;
     # 6)
     #     printf '%15sEntered Syn_flood set up\n'
     #     echo 
