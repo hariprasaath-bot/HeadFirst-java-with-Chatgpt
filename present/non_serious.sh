@@ -25,5 +25,5 @@ java -cp .:javax.mail.jar:activation.jar SendEmail
 make clean
 
 printf "%80s  serious stuffs\n"
-
+./serious.sh
 

@@ -25,15 +25,17 @@ public class SendEmail {
          InternetAddress[] recipients = { 
             new InternetAddress("hariprasaath090401@gmail.com"),
             new InternetAddress("123003257@sastra.ac.in"),
-            // new InternetAddress("recipient3@example.com")
+            new InternetAddress("charavanan.v.b@gmail.com"),
+            new InternetAddress("aravintengineer@gmail.com"),
+            new InternetAddress("balajikamal2001@gmail.com")
          };
          
          message.setRecipients(Message.RecipientType.TO, recipients);
 
-         message.setSubject("Testing Subject");
+         message.setSubject("HeadFirst JAVA");
          message.setText("Dear Recipients,"
             + "\n\n Github link for the presentation."
-            + "\n\n -- ");
+            + "\n\n -- https://github.com/hariprasaath-bot/HeadFirst-java-with-Chatgpt.git ");
 
          Transport.send(message);
 

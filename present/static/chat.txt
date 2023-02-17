@@ -1,0 +1,60 @@
+Hariprasaath R
+give me example ofstatic use case in java
+Sure! One example of a static use case in Java is the Math class, which provides a collection of static methods for performing common mathematical operations.
+
+For example, you can use the Math.max() method to find the maximum of two numbers:
+
+python
+Copy code
+int x = 5;
+int y = 10;
+int max = Math.max(x, y); // max is now 10
+In this example, Math.max() is a static method, which means it belongs to the class Math itself rather than any particular instance of the class. This allows you to call the method directly on the class without needing to create an instance of it first.
+
+Another example of a static use case in Java is the System class, which provides access to system-related resources and functionality. One of the most commonly used static methods in this class is System.out.println(), which allows you to print output to the console:
+
+go
+Copy code
+System.out.println("Hello, world!");
+In this example, System.out is a static field that provides access to the standard output stream, and println() is a static method that writes a string to that stream followed by a newline character.
+
+
+
+
+Hariprasaath R
+give me example of static use case in java Userdefined.
+Certainly! Here is an example of a static use case in a user-defined class in Java:
+
+csharp
+Copy code
+public class User {
+    private static int numUsers = 0; // static variable to keep track of the number of users
+
+    private String name;
+
+    public User(String name) {
+        this.name = name;
+        numUsers++; // increment the number of users every time a new User object is created
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public static int getNumUsers() {
+        return numUsers; // static method to get the total number of users
+    }
+}
+In this example, the User class has a static variable called numUsers, which keeps track of the total number of User objects that have been created. This variable is incremented every time a new User object is instantiated.
+
+The User class also has a static method called getNumUsers(), which returns the current value of the numUsers variable. Because this method is static, it can be called on the User class itself, rather than on any particular instance of the class.
+
+Here is an example of how you could use this User class:
+
+sql
+Copy code
+User user1 = new User("Alice");
+User user2 = new User("Bob");
+
+System.out.println(User.getNumUsers()); // prints "2"
+In this example, user1 and user2 are two instances of the User class. When these objects are created, the numUsers variable is incremented by the User constructor. Finally, the getNumUsers() static method is called on the User class to get the total number of users (which is 2 in this case).
