@@ -15,11 +15,14 @@ case $usrchoice in
         printf '%80s Static example Code\n'
         cat *.java
         printf '%80s Compiling and Executing program\n'
-        javac *.java
+        javac -d ../classfiles *.java
         # ls | grep .class
+        cd ..
+        cd classfiles
         comm=$(ls | grep .class)
         Classfile=${comm::-6}
         java $Classfile
+        make clean
         echo
         echo
         cd .. 
@@ -32,8 +35,10 @@ case $usrchoice in
         printf '%80s Constructor example Code\n'
         cat *.java
         printf '%80s Compiling and Executing program\n'
-        javac *.java
+        javac -d ../classfiles *.java
         # ls | grep .class
+        cd ..
+        cd classfiles
         comm=$(ls | grep .class)
         Classfile=${comm::-6}
         java $Classfile
@@ -50,10 +55,11 @@ case $usrchoice in
         printf '%80s Server example Code\n'
         cat *.java
         printf '%80s Compiling and Executing program\n'
-        javac *.java
+        javac -d ../classfiles *.java
         # ls | grep .class
+        cd ..
+        cd classfiles
         comm="Server.class"
-        printf ''"${comm::-6}"
         Classfile=${comm::-6}
         java $Classfile
         echo
@@ -69,8 +75,10 @@ case $usrchoice in
         printf '%80sClient example Code\n'
         cat *.java
         printf '%80s Compiling and Executing program\n'
-        javac *.java
+        javac -d ../classfiles *.java
         # ls | grep .class
+        cd ..
+        cd classfiles
         comm=$(ls | grep .class)
         Classfile=${comm::-6}
         java $Classfile
